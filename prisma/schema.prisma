@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  password       String
+  login          String   @unique
+  role           roles
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  email          String   @unique
+  name           String?
+  first_surname  String?
+  second_surname String?
+  age            Int?
+
+  @@map("user")
+}
+
+model Admin {
+  id Int @id
+
+  @@map("admin")
+}
+
+model Customer {
+  id           Int      @id
+  Review       Review[]
+  phone        String   @unique
+  city         String
+  district     String
+  house_number Int
+
+  @@map("customer")
+}
+
+model Pizza {
+  id           Int      @id
+  price        Int
+  category     Category @relation(fields: [categoryName], references: [name])
+  categoryName String
+  weight       Int
+  size         sizes
+  imageURL     String   @unique
+  rating       Int
+  available    Boolean
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("pizza")
+}
+
+model Category {
+  id          Int     @default(autoincrement())
+  name        String  @id @unique
+  description String
+  Pizza       Pizza[]
+
+  @@map("category")
+}
+
+model Cart {
+  id Int @id
+}
+
+model Review {
+  id       Int      @id @default(autoincrement())
+  rating   Int
+  author   Customer @relation(fields: [authorId], references: [id])
+  authorId Int
+}
+
+enum sizes {
+  small
+  medium
+  height
+}
+
+enum roles {
+  ADMIN
+  CUSTOMER
+}

@@ -1,11 +1,8 @@
 import express from "express";
+import UserController from "../controllers/UserController.js";
 const UserRouter = express.Router();
 
-UserRouter.get('/user', (req, res) => {
-
-});
-UserRouter.get('/user:id', (req, res) => {
-	const {id} = req.params;
-})
+UserRouter.get('/user', UserController.getAllUsers);
+UserRouter.get('/user/:login', UserController.getOneUser)
 
 export default UserRouter;

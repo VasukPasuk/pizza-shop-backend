@@ -17,10 +17,12 @@ model User {
   id             Int      @id @default(autoincrement())
   password       String
   login          String   @unique
-  role           roles
+  activated      Boolean  @default(false)
+  activationLink String?  @unique
+  role           roles?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
-  email          String   @unique
+  email          String?  @unique
   name           String?
   first_surname  String?
   second_surname String?
@@ -49,7 +51,7 @@ model Customer {
 model Pizza {
   id           Int      @id
   price        Int
-  category     Category @relation(fields: [categoryName], references: [name])
+  category     Category @relation(fields: [categoryName], references: [name], onDelete: Cascade)
   categoryName String
   weight       Int
   size         sizes

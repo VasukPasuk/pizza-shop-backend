@@ -1,12 +1,16 @@
+import {validationResult} from "express-validator";
 import CategoryService from "../services/CategoryService.js";
 class CategoryController {
 	async getOne(req, res){
 		try {
+			const errors = validationResult(req)
+			if (!errors.isEmpty()) throw new Error('Query parameter has a problem')
 			const {name} = req.params;
 			const category = await CategoryService.getOne(name)
 			res.json(category)
+			
 		} catch (e) {
-			res.status(500).json(e)
+			res.status(500).json({error: e.message})
 		}
 	}
 	async delete(req, res) {

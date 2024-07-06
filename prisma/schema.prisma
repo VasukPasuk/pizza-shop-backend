@@ -27,6 +27,8 @@ model User {
   first_surname  String?
   second_surname String?
   age            Int?
+  Cart           Cart[]
+  Likes          Likes[]
 
   @@map("user")
 }
@@ -50,6 +52,7 @@ model Customer {
 
 model Pizza {
   id           Int      @id
+  name         String   @unique
   price        Int
   category     Category @relation(fields: [categoryName], references: [name], onDelete: Cascade)
   categoryName String
@@ -60,6 +63,8 @@ model Pizza {
   available    Boolean
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  Cart         Cart[]
+  Review       Review[]
 
   @@map("pizza")
 }
@@ -74,14 +79,37 @@ model Category {
 }
 
 model Cart {
-  id Int @id
+  id      Int   @id
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pizza   Pizza @relation(fields: [pizzaId], references: [id], onDelete: Cascade)
+  userId  Int
+  pizzaId Int
+
+  @@map("cart")
 }
 
 model Review {
   id       Int      @id @default(autoincrement())
+  text     String
   rating   Int
-  author   Customer @relation(fields: [authorId], references: [id])
+  author   Customer @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  pizza    Pizza    @relation(fields: [pizzaId], references: [id], onDelete: Cascade)
+  pizzaId  Int
   authorId Int
+  Likes    Likes[]
+
+  @@map("review")
+}
+
+model Likes {
+  id         Int      @id @default(autoincrement())
+  liked      Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  review     Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reviewId   Int
+  userId     Int
 }
 
 enum sizes {

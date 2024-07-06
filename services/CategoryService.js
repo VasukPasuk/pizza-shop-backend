@@ -17,12 +17,11 @@ class CategoryService {
 	}
 	async delete(name){
 		if (!name) throw new Error("Undefined name")
-		const category = await prisma.category.delete({
+		return prisma.category.delete({
 			where: {
 				name: name
 			}
 		});
-		return category;
 	}
 	async create(name, description) {
 		if (!name || !description) {
@@ -48,8 +47,7 @@ class CategoryService {
 	}
 	
 	async getAll(){
-		const categories =  await prisma.category.findMany()
-		return categories
+		return prisma.category.findMany();
 	}
 	async update(name) {
 		if (!name) throw new Error("Undefined name")

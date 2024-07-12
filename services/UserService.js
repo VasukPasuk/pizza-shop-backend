@@ -1,4 +1,5 @@
 import prisma from "../index.js";
+import bcrypt from "bcrypt";
 
 class UserService {
 	async getAllUsers() {
@@ -16,35 +17,35 @@ class UserService {
 			}
 		});
 		if (!user) {
-			throw new Error("Error, user not found");
+			throw new Error("Error, user doesn't exist.");
 		}
 		return user;
 	}
 	
 	async createUser(login, password, email) {
-		
+		const salt = bcrypt.genSalt(20);
+		const encryptedPassword = bcrypt.hash(password, salt)
 		const newUser = await prisma.user.create({
 			data: {
-				login,
-				password,
-				email
+				login: login,
+				password: encryptedPassword,
+				email: email
 			}
 		});
 		if (!newUser) {
 			throw new Error("Error, user can't be created");
 		}
 		return newUser;
-		
 	}
 	
-	async checkUser(login) {
-		const user = await prisma.user.findUnique({
-			where: {
-				login: login
-			}
-		});
-		return Boolean(user)
-	}
+	// async checkUser(login) {
+	// 	const user = await prisma.user.findUnique({
+	// 		where: {
+	// 			login: login
+	// 		}
+	// 	});
+	// 	return Boolean(user)
+	// }
 }
 
 export default new UserService();

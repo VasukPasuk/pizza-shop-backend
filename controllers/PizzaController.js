@@ -7,7 +7,6 @@ class PizzaController {
 			return res.status(200).json(pizza)
 		} catch (e) {
 			console.log(e.message);
-			res.status(400).json('Error');
 		}
 	}
 	async getOne(req, res) {
@@ -17,7 +16,6 @@ class PizzaController {
 			return res.status(200).json(pizza)
 		} catch (e) {
 			console.log(e.message);
-			res.status(400).json('Error');
 		}
 	}
 	async create(req, res) {
@@ -27,7 +25,6 @@ class PizzaController {
 			return res.status(200).json(pizza)
 		} catch (e) {
 			console.log(e.message);
-			res.status(400).json('Error');
 		}
 	}
 	async deleteAll(req, res) {
@@ -36,7 +33,6 @@ class PizzaController {
 			return res.status(200).json(pizza)
 		} catch (e) {
 			console.log(e.message);
-			res.status(400).json('Error');
 		}
 	}
 	async deleteOne(req, res) {
@@ -46,7 +42,6 @@ class PizzaController {
 			return res.status(200).json(pizza)
 		} catch (e) {
 			console.log(e.message);
-			res.status(400).json('Error');
 		}
 	}
 	async updateFull(req, res) {
@@ -56,7 +51,6 @@ class PizzaController {
 			return res.status(200).json(pizza)
 		} catch (e) {
 			console.log(e.message);
-			res.status(400).json('Error');
 		}
 	}
 	async updatePartial(req, res) {
@@ -66,7 +60,6 @@ class PizzaController {
 			return res.status(200).json(pizza)
 		} catch (e) {
 			console.log(e.message);
-			res.status(400).json('Error');
 		}
 	}
 }

@@ -13,6 +13,9 @@ import CategoryRouter from "./routers/CategoryRouter.js";
 import UserRouter from "./routers/UserRouter.js";
 import AuthRouter from "./routers/AuthRouter.js";
 import PizzaRouter from "./routers/PizzaRouter.js";
+import checkAdminMiddleware from "./middlewares/checkAdminMiddleware.js";
+import errorMiddleware from "./middlewares/error.middleware.js";
+import validateTokenMiddleware from "./middlewares/validateToken.middleware.js";
 
 dotenv.config()
 
@@ -27,10 +30,12 @@ app.use(cors());
 app.use(cookieParser())
 
 // Register Routers
-app.use('/api', CategoryRouter);
-app.use('/api', UserRouter)
+app.use('/api', validateTokenMiddleware, CategoryRouter);
+app.use('/api', validateTokenMiddleware, UserRouter)
 app.use('/api/auth/', AuthRouter)
-app.use('/api', PizzaRouter)
+app.use('/api', validateTokenMiddleware, PizzaRouter)
+
+app.use(errorMiddleware)
 
 const port = process.env.PORT || 4000;
 

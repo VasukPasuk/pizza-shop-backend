@@ -30,10 +30,10 @@ app.use(cors());
 app.use(cookieParser())
 
 // Register Routers
-app.use('/api', validateTokenMiddleware, CategoryRouter);
-app.use('/api', validateTokenMiddleware, UserRouter)
+app.use('/api', CategoryRouter);
+app.use('/api', UserRouter)
 app.use('/api/auth/', AuthRouter)
-app.use('/api', validateTokenMiddleware, PizzaRouter)
+app.use('/api', PizzaRouter)
 
 app.use(errorMiddleware)
 
@@ -50,6 +50,6 @@ async function main() {
 	}
 }
 
-main().then(r => r)
+main().catch(err => console.log("Error."))
 
 export default prisma;

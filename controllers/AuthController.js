@@ -12,7 +12,6 @@ class AuthController {
 			})
 			res.json({accessToken, user})
 		} catch (e) {
-			console.log(e.message)
 			return res.status(400).json('Error')
 		}
 	}
@@ -20,7 +19,6 @@ class AuthController {
 		try {
 		
 		} catch (e) {
-			console.log(e.message)
 			return res.status(400).json('Error')
 		}
 	}
@@ -28,7 +26,6 @@ class AuthController {
 		try {
 		
 		} catch (e) {
-			console.log(e.message)
 			return res.status(400).json('Error')
 		}
 	}
@@ -36,7 +33,6 @@ class AuthController {
 		try {
 		
 		} catch (e) {
-			console.log(e.message)
 			return res.status(400).json('Error')
 		}
 	}
@@ -46,7 +42,6 @@ class AuthController {
 			const user = await AuthService.activate(link)
 			res.status(200).json(user);
 		} catch (e) {
-			console.log(e.message)
 			return res.status(400).json('Error')
 		}
 	}
